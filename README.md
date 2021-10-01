@@ -7,4 +7,4 @@ A demo project using cypress
 3.Open terminal and write npm install
 
 # How to run the tests:
-1../node_modules/.bin/cypress open
+./node_modules/.bin/cypress open
