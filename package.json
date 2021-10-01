@@ -1,0 +1,14 @@
+{
+  "name": "cypress-up-skill",
+  "version": "1.0.0",
+  "description": "A demo project for end to end test using cypress",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vlad Mocan",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^8.5.0"
+  }
+}
