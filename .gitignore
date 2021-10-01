@@ -10,6 +10,10 @@
 *.userosscache
 *.sln.docstates
 
+#igone npm
+
+node_modules/
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
