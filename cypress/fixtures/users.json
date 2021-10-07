@@ -1,0 +1,16 @@
+[
+  {
+    "email": "cristian.moculescu@chiparos.com",
+    "username": "cristi.mock",
+    "address": "1234 Main",
+    "active": true,
+    "id": 1
+  },
+  {
+    "email": "sebastian.moculescu@chiparos.com",
+    "username": "sebi.mock",
+    "address": "1234 Main",
+    "active": false,
+    "id": 2
+  }
+]
