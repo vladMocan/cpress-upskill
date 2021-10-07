@@ -42,6 +42,20 @@ describe('User List page', () => {
         cy.get('@activeStatusColumn').should('have.text', 'Active')
     })
 
+    it('should correctly display a filtered table when entering valid "Search By" input', () => {
+        cy.get('@searchInputBox').type('cristi')
+        cy.get('@rowName')
+            .should('have.length', 1)
+            .and('have.text', ' cristi.mock ')
+        cy.get('@searchInputBox').clear()
+    })
+
+    it('should correctly display an empty table when entering invalid "Search By" input', () => {
+        cy.get('@searchInputBox').type('ab#1;')
+        cy.get('@rowName').should('not.exist')
+        cy.get('@searchInputBox').clear()
+    })
+
     it('should correctly load stubbed /users API call response in the table', () => {
         const userArray = [
             {
@@ -55,25 +69,35 @@ describe('User List page', () => {
                 active: false,
             },
         ]
-        cy.get('@rowName').each(($el, index) => {
-            cy.wrap($el).should('have.text', userArray[index].name)
-        })
-        cy.get('@rowEmail').each(($el, index) => {
-            cy.wrap($el).should('have.text', userArray[index].email)
-        })
-        cy.get('@rowAddress').each(($el) => {
-            cy.wrap($el).should('have.text', '1234 Main')
-        })
-        cy.get('@rowCheckbox').each(($el, index) => {
-            if (userArray[index].active) cy.wrap($el).should('be.checked')
-            else cy.wrap($el).should('not.be.checked')
-        })
-        cy.get('[data-testid="delete-button"]').each(($el) => {
-            cy.wrap($el)
-                .should('have.text', 'Delete ')
-                .and('have.css', 'background-color', 'rgb(220, 53, 69)')
-                .and('be.enabled')
-        })
+        cy.get('@rowName')
+            .should('have.length', 2)
+            .each(($el, index) => {
+                cy.wrap($el).should('have.text', userArray[index].name)
+            })
+        cy.get('@rowEmail')
+            .should('have.length', 2)
+            .each(($el, index) => {
+                cy.wrap($el).should('have.text', userArray[index].email)
+            })
+        cy.get('@rowAddress')
+            .should('have.length', 2)
+            .each(($el) => {
+                cy.wrap($el).should('have.text', '1234 Main')
+            })
+        cy.get('@rowCheckbox')
+            .should('have.length', 2)
+            .each(($el, index) => {
+                if (userArray[index].active) cy.wrap($el).should('be.checked')
+                else cy.wrap($el).should('not.be.checked')
+            })
+        cy.get('[data-testid="delete-button"]')
+            .should('have.length', 2)
+            .each(($el) => {
+                cy.wrap($el)
+                    .should('have.text', 'Delete ')
+                    .and('have.css', 'background-color', 'rgb(220, 53, 69)')
+                    .and('be.enabled')
+            })
     })
 
     it('should show "Create User" button', () => {
