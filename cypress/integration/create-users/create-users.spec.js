@@ -12,10 +12,10 @@ describe('Create user', () => {
   it('displays the create user form', () => {
     cy.get('.container h2').should('have.text', 'Create User')
     cy.get('@emailInput').should('be.empty')
-    cy.get('@userInput').as('userInput').should('be.empty')
-    cy.get('@addressInput').as('addressInput').should('be.empty')
+    cy.get('@userInput').should('be.empty')
+    cy.get('@addressInput').should('be.empty')
     cy.get('.form-check-label').should('have.text', ' Active ')
-    cy.get('[data-testid="checkbox"]').as('activeCheckbox').should('be.checked')
+    cy.get('[data-testid="checkbox"]').should('be.checked')
     cy.get('@createBtn').should('be.enabled')
     cy.get('@cancelBtn').should('be.enabled')
   })
