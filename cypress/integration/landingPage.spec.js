@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+import * as constants from '../helpers/constants.js'
 
 describe('Landing page', () => {
     before(() => {
@@ -14,7 +15,7 @@ describe('Landing page', () => {
     })
 
     it('should have title "QA"', () => {
-        cy.title().should('equal', 'QA')
+        cy.title().should('equal', constants.values.title)
     })
 
     it('should show "User List" nav button', () => {
