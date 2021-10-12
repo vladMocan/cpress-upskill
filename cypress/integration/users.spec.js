@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+import users from '../fixtures/users.json'
 
 describe('User List page', () => {
     before(() => {
@@ -57,41 +58,29 @@ describe('User List page', () => {
     })
 
     it('should correctly load stubbed /users API call response in the table', () => {
-        const userArray = [
-            {
-                name: ' cristi.mock ',
-                email: 'cristian.moculescu@chiparos.com',
-                active: true,
-            },
-            {
-                name: ' sebi.mock ',
-                email: 'sebastian.moculescu@chiparos.com',
-                active: false,
-            },
-        ]
         cy.get('@rowName')
-            .should('have.length', 2)
+            .should('have.length', users.length)
             .each(($el, index) => {
-                cy.wrap($el).should('have.text', userArray[index].name)
+                cy.wrap($el).should('include.text', users[index].username)
             })
         cy.get('@rowEmail')
-            .should('have.length', 2)
+            .should('have.length', users.length)
             .each(($el, index) => {
-                cy.wrap($el).should('have.text', userArray[index].email)
+                cy.wrap($el).should('have.text', users[index].email)
             })
         cy.get('@rowAddress')
-            .should('have.length', 2)
+            .should('have.length', users.length)
             .each(($el) => {
                 cy.wrap($el).should('have.text', '1234 Main')
             })
         cy.get('@rowCheckbox')
-            .should('have.length', 2)
+            .should('have.length', users.length)
             .each(($el, index) => {
-                if (userArray[index].active) cy.wrap($el).should('be.checked')
+                if (users[index].active) cy.wrap($el).should('be.checked')
                 else cy.wrap($el).should('not.be.checked')
             })
         cy.get('[data-testid="delete-button"]')
-            .should('have.length', 2)
+            .should('have.length', users.length)
             .each(($el) => {
                 cy.wrap($el)
                     .should('have.text', 'Delete ')
