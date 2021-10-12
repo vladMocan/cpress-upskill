@@ -1,11 +1,26 @@
 /// <reference types="cypress" />
+import * as constants from '../helpers/constants.js'
 
-describe("Landing page", () => {
-  beforeEach(() => {
-    cy.visit("/");
-  });
+describe('Landing page', () => {
+    before(() => {
+        cy.visit('/')
+    })
 
-  it("should redirect to /users", () => {
-    cy.location("pathname").should("equal", "/users");
-  });
-});
+    beforeEach(() => {
+        cy.get('[data-testid="user-list"]').as('userListNavButton')
+    })
+
+    it('should redirect to /users', () => {
+        cy.location('pathname').should('equal', '/users')
+    })
+
+    it('should have title "QA"', () => {
+        cy.title().should('equal', constants.values.title)
+    })
+
+    it('should show "User List" nav button', () => {
+        cy.get('@userListNavButton')
+            .should('have.text', ' User List ')
+            .and('have.attr', 'href', '/users')
+    })
+})
