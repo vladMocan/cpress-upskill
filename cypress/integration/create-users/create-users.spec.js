@@ -1,7 +1,7 @@
 describe('Create user', () => {
   
   beforeEach(() => {
-    cy.visit('https://be-the-qa-fe.herokuapp.com/user/create')
+    cy.visit('/user/create')
     cy.get('[data-testid="email-input"]').as('emailInput')
     cy.get('[data-testid="user-input"]').as('userInput')
     cy.get('[data-testid="address-input"]').as('addressInput')
@@ -34,6 +34,6 @@ describe('Create user', () => {
 
   it('redirects to user list on cancel', () => {
     cy.get('@cancelBtn').click()
-    cy.url().should('eq', 'https://be-the-qa-fe.herokuapp.com/users')
+    cy.url().should('eq', `${Cypress.config().baseUrl}/users`)
   })
 })

@@ -1,11 +1,11 @@
 describe('User list', () => {
   
   beforeEach(() => {
-    cy.visit('https://be-the-qa-fe.herokuapp.com/')
+    cy.visit('/')
   })
 
   it('redirects to /users page', () => {
-    cy.url().should('eq', 'https://be-the-qa-fe.herokuapp.com/users')
+    cy.url().should('eq', `${Cypress.config().baseUrl}/users`)
   })
 
   it('displays an empty user list', () => {
@@ -22,6 +22,6 @@ describe('User list', () => {
     cy.get('[data-testid="create-user-button"]')
       .should('be.enabled')
       .click()
-    cy.url().should('eq', 'https://be-the-qa-fe.herokuapp.com/user/create')
+    cy.url().should('eq', `${Cypress.config().baseUrl}/user/create`)
   })
 })
