@@ -1,3 +1,5 @@
+const strings = require('../../support/strings')
+
 describe('User list', () => {
   
   beforeEach(() => {
@@ -9,13 +11,13 @@ describe('User list', () => {
   })
 
   it('displays an empty user list', () => {
-    cy.get('.card-header').should('have.text', ' User list ')
-    cy.get('[data-testid="no users text"]').should('have.text', ' No users were found ')
+    cy.get('.card-header').should('have.text', strings.userList)
+    cy.get('[data-testid="no users text"]').should('have.text', strings.noUsersFound)
   })
 
   it('allows searching for users', () => {
     cy.get('[data-testid="search-input"]').should('be.empty')
-    cy.get('[data-testid="search-result"]').should('have.text', 'Search by:  ')
+    cy.get('[data-testid="search-result"]').should('have.text', strings.searchBy)
   })
 
   it('allows creating users', () => {

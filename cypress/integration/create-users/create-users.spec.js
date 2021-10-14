@@ -1,3 +1,5 @@
+const strings = require('../../support/strings')
+
 describe('Create user', () => {
   
   beforeEach(() => {
@@ -10,11 +12,11 @@ describe('Create user', () => {
   })
 
   it('displays the create user form', () => {
-    cy.get('.container h2').should('have.text', 'Create User')
+    cy.get('.container h2').should('have.text', strings.createUser)
     cy.get('@emailInput').should('be.empty')
     cy.get('@userInput').should('be.empty')
     cy.get('@addressInput').should('be.empty')
-    cy.get('.form-check-label').should('have.text', ' Active ')
+    cy.get('.form-check-label').should('have.text', strings.active)
     cy.get('[data-testid="checkbox"]').should('be.checked')
     cy.get('@createBtn').should('be.enabled')
     cy.get('@cancelBtn').should('be.enabled')
@@ -25,10 +27,11 @@ describe('Create user', () => {
     cy.get('@userInput').clear()
     cy.get('@addressInput').clear()
     cy.get('@createBtn').click()
-    cy.checkErrorStyling('Invalid Email')
-    cy.get('.form-row > div:nth-child(2) > div').as('usernameError').should('have.text', ' Field required ')
+    cy.get('.form-row > div:nth-child(1) > div').as('emailError').should('have.text', strings.invalidEmail)
+    cy.checkErrorStyling('@emailError') 
+    cy.get('.form-row > div:nth-child(2) > div').as('usernameError').should('have.text', strings.fieldRequired)
     cy.checkErrorStyling('@usernameError') 
-    cy.get('form > div:nth-child(2) > div').as('addressError').should('have.text', ' Field required ')
+    cy.get('form > div:nth-child(2) > div').as('addressError').should('have.text', strings.fieldRequired)
     cy.checkErrorStyling('@addressError')
   })
 
