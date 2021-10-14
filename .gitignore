@@ -10,7 +10,7 @@
 *.userosscache
 *.sln.docstates
 
-#igone npm
+# Ignore npm
 
 node_modules/
 
