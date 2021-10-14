@@ -24,8 +24,12 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.Commands.add('checkErrorStyling', (input) => {
-  const element = input === 'Invalid Email' ? cy.contains(input) : cy.get(input)
+/**
+ * Check the styling of form error messages.
+ * @param {string} selector The selector of the element to check.
+ */
+Cypress.Commands.add('checkErrorStyling', (selector) => {
+  const element = cy.get(selector)
   element.should('have.class', 'alert-danger')
     .should('have.css', 'background-color')
     .and('eq', 'rgb(248, 215, 218)')
