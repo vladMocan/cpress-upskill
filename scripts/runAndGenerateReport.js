@@ -3,7 +3,7 @@ const fse = require('fs-extra')
 const { merge } = require('mochawesome-merge')
 const generator = require('mochawesome-report-generator')
 
-async function runTests() {
+async function runTestsAndGenerateReport() {
     await fse.emptyDir('mochawesome-report'); // empty the report folder
     const { totalFailed } = await cypress.run() // get the number of failed tests
     const jsonReport = await merge() // generate JSON report
@@ -11,4 +11,4 @@ async function runTests() {
     process.exit(totalFailed) // exit with the number of failed tests
 }
 
-runTests()
+runTestsAndGenerateReport()

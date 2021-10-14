@@ -5,9 +5,11 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "generate-report": "node scripts/cypress.js",
-        "generate-report-firefox": "node scripts/cypress.js --browser firefox",
-        "generate-report-electron": "node scripts/cypress.js --browser electron"
+        "cy:run-firefox" : "cypress run --browser firefox",
+        "cy:run-chrome" : "cypress run --browser chrome",
+        "generate-report": "node scripts/generateReport.js",
+        "cy:run-and-report-firefox": "node scripts/runAndGenerateReport.js --browser firefox",
+        "cy:run-and-report-chrome": "node scripts/runAndGenerateReport.js --browser chrome"
     },
     "author": "Vlad Mocan",
     "license": "ISC",
