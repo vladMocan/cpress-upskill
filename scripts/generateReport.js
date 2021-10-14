@@ -1,5 +1,3 @@
-const cypress = require('cypress')
-const fse = require('fs-extra')
 const { merge } = require('mochawesome-merge')
 const generator = require('mochawesome-report-generator')
 

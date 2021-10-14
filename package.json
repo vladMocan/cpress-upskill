@@ -5,8 +5,8 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "cy:run-firefox" : "cypress run --browser firefox",
-        "cy:run-chrome" : "cypress run --browser chrome",
+        "cy:run-firefox": "cypress run --browser firefox",
+        "cy:run-chrome": "cypress run --browser chrome",
         "generate-report": "node scripts/generateReport.js",
         "cy:run-and-report-firefox": "node scripts/runAndGenerateReport.js --browser firefox",
         "cy:run-and-report-chrome": "node scripts/runAndGenerateReport.js --browser chrome"
