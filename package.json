@@ -4,11 +4,25 @@
   "description": "A demo project for end to end test using cypress",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:run-chrome": "cypress run --browser chrome",
+    "cy:run-firefox": "cypress run --browser firefox",
+    "cy:run-tests": "cypress run --spec \"cypress/integration/users/**/*,cypress/integration/create-users/**/*\"",
+    "clean-reports": "if exist cypress\\reports rmdir /s/q cypress\\reports && mkdir cypress\\reports && mkdir cypress\\reports\\mochawesome",
+    "combine-reports": "mochawesome-merge cypress/reports/json/*.json > cypress/reports/mochawesome/report.json",
+    "generate-report": "npm run combine-reports && marge cypress/reports/mochawesome/report.json -f report -o cypress/reports/mochawesome --charts true --autoOpen true",
+    "test": "npm run clean-reports && npm run cy:run-tests"
   },
   "author": "Vlad Mocan",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^8.5.0"
-  }
+    "cypress": "^8.5.0",
+    "cypress-multi-reporters": "^1.5.0",
+    "mocha": "^9.1.2",
+    "mochawesome": "^6.3.1",
+    "mochawesome-merge": "^4.2.0",
+    "mochawesome-report-generator": "^5.2.0"
+  },
+  "dependencies": {}
 }

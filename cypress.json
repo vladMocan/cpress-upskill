@@ -1,3 +1,16 @@
 {
-  "baseUrl": "https://be-the-qa-fe.herokuapp.com"
+  "baseUrl": "https://be-the-qa-fe.herokuapp.com",
+  "video": false,
+  "screenshotOnFailure": true,
+  "screenshotsFolder": "cypress/reports/mochawesome/assets",
+  "reporter": "cypress-multi-reporters",
+  "reporterOptions": {
+    "reporterEnabled": "mochawesome",
+    "mochawesomeReporterOptions": {
+      "reportDir": "cypress/reports/json",
+      "html": false,
+      "json": true,
+      "overwrite": false
+    }
+  }
 }
