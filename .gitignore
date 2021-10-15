@@ -10,7 +10,7 @@
 *.userosscache
 *.sln.docstates
 
-#igone npm
+# Ignore npm
 
 node_modules/
 
@@ -352,3 +352,7 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# Reports
+
+reports/
