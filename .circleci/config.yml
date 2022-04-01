@@ -134,12 +134,12 @@ workflows:
     <<: *all-tests-workflow
    
   # scheduled tasks
-  linux_rico_API_scheduled:
+  parallel_scheduled:
     triggers:
       - schedule:
           cron: "30 4 * * 1-5"
           filters:
             branches:
               only:
-                - master
+                - main
     <<:  *all-tests-workflow
