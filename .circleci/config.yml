@@ -1,0 +1,135 @@
+version: 2.1
+orbs:
+  cypress: cypress-io/cypress@1.21.0
+  win: circleci/windows@2.4.1
+  slack: circleci/slack@4.4.2
+
+executors:
+  with-chrome-and-firefox:
+    docker:
+      - image: "cypress/browsers:node16.5.0-chrome97-ff96"
+    resource_class: medium+
+    
+# Set parameter here
+parameters:
+  chrome_tests:
+    type: boolean
+    default: false
+  fireFox_tests:
+    type: boolean
+    default: true
+  parallel_tests:
+    type: boolean
+    default: true
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Commands ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+commands:
+  report-tests:
+    description: |
+      Notify the status of the build
+    steps:
+      - run:
+           name: notify slack
+           when: always
+      - store_artifacts:
+                path: mochawesome-report
+      - slack/notify:
+                 event: fail
+                 template: basic_fail_1
+      - slack/notify:
+                  event: pass
+                  template: basic_success_1 
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Workflows ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+all-tests-workflow: &all-tests-workflow
+ jobs:
+   # Setup
+    - cypress/install:
+        name: "Setup Linux"
+        executor: with-chrome-and-firefox
+        post-steps:
+          - run:
+              name: Print machine info ℹ️
+              command: yarn cypress info
+
+ # Run all tests 
+    - cypress/run:
+        name: "Run tests on all browsers"
+        command: npm run cy:run-and-report-chrome
+        no-workspace: true
+          # always store any test screenshots and videos
+        store_artifacts: true
+        group: API
+        requires:
+          - Setup Linux
+      #  post-steps:
+      #    - report-tests
+
+      - cypress/run:
+        name: "Run tests on all browsers"
+        command: npm run cy:run-and-report-firefox
+        no-workspace: true
+          # always store any test screenshots and videos
+        store_artifacts: true
+        group: API
+        requires:
+          - Setup Linux
+      #  post-steps:
+      #    - report-tests
+
+
+chrome-workflow: &chrome-workflow
+ jobs:
+   # Setup
+    - cypress/install:
+        name: "Setup Linux"
+        executor: with-chrome-and-firefox
+        post-steps:
+          - run:
+              name: Print machine info ℹ️
+              command: yarn cypress info
+
+ # Run chrome tests 
+    - cypress/run:
+        name: "Run chrome tests"
+        command: npm run cy:run-and-report-chrome
+        no-workspace: true
+          # always store any test screenshots and videos
+        store_artifacts: true
+        group: API
+        requires:
+          - Setup Linux
+        #post-steps:
+        #  - report-tests     
+        
+        
+firefox-workflow: &firefox--workflow
+ jobs:
+   # Setup
+    - cypress/install:
+        name: "Setup Linux"
+        executor: with-chrome-and-firefox
+        post-steps:
+          - run:
+              name: Print machine info ℹ️
+              command: yarn cypress info
+
+ # Run firefox tests 
+    - cypress/run:
+        name: "Run firefox tests"
+        command: 
+        no-workspace: true
+          # always store any test screenshots and videos
+        store_artifacts: true
+        group: API
+        requires:
+          - Setup Linux
+        #post-steps:
+        #  - report-tests     
+        
+
+workflows:
+  linux_parallel_test:
+    when: << pipeline.parameters.parallel_tests>>
+    <<: *all-tests-workflow
+   

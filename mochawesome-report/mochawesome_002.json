@@ -1,0 +1,218 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 7,
+    "passes": 7,
+    "pending": 0,
+    "failures": 0,
+    "start": "2022-04-01T10:36:17.295Z",
+    "end": "2022-04-01T10:36:20.231Z",
+    "duration": 2936,
+    "testsRegistered": 7,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "33527aa8-35d6-405e-9130-d9e084c4304a",
+      "title": "",
+      "fullFile": "cypress/integration/users.spec.js",
+      "file": "cypress/integration/users.spec.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "048fabaf-d7e3-4495-b6eb-744046826ca1",
+          "title": "User List page",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should show User List section",
+              "fullTitle": "User List page should show User List section",
+              "timedOut": null,
+              "duration": 1552,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('@userListSection').should('be.visible');\ncy.get('@userListSectionHeader').should('have.text', ' User list ');",
+              "err": {},
+              "uuid": "1a8c38e8-c90a-4f37-80b9-6e3e06478d0d",
+              "parentUUID": "048fabaf-d7e3-4495-b6eb-744046826ca1",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should show Search By input box",
+              "fullTitle": "User List page should show Search By input box",
+              "timedOut": null,
+              "duration": 78,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('@searchInputBox').should('be.visible').and('be.empty');",
+              "err": {},
+              "uuid": "52b9da13-08a9-4563-b5e6-e4d3ae094108",
+              "parentUUID": "048fabaf-d7e3-4495-b6eb-744046826ca1",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should show the user table and each column",
+              "fullTitle": "User List page should show the user table and each column",
+              "timedOut": null,
+              "duration": 90,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('@userTable').should('be.visible');\ncy.get('@nameColumn').should('have.text', 'Name');\ncy.get('@emailColumn').should('have.text', 'Email');\ncy.get('@addressColumn').should('have.text', 'Address');\ncy.get('@activeStatusColumn').should('have.text', 'Active');",
+              "err": {},
+              "uuid": "e2b80539-244a-4d19-816a-ca76824fab90",
+              "parentUUID": "048fabaf-d7e3-4495-b6eb-744046826ca1",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should correctly display a filtered table when entering valid Search By input",
+              "fullTitle": "User List page should correctly display a filtered table when entering valid Search By input",
+              "timedOut": null,
+              "duration": 420,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('@searchInputBox').type('cristi');\ncy.get('@rowName').should('have.length', 1).and('have.text', ' cristi.mock ');\ncy.get('@searchInputBox').clear();",
+              "err": {},
+              "uuid": "75186911-9c3c-490a-b4e6-be138efb128c",
+              "parentUUID": "048fabaf-d7e3-4495-b6eb-744046826ca1",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should correctly display an empty table when entering invalid Search By input",
+              "fullTitle": "User List page should correctly display an empty table when entering invalid Search By input",
+              "timedOut": null,
+              "duration": 329,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('@searchInputBox').type('ab#1;');\ncy.get('@rowName').should('not.exist');\ncy.get('@searchInputBox').clear();",
+              "err": {},
+              "uuid": "29f20e5b-c4a3-424a-9b22-ce21fd940374",
+              "parentUUID": "048fabaf-d7e3-4495-b6eb-744046826ca1",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should correctly load stubbed /users API call response in the table",
+              "fullTitle": "User List page should correctly load stubbed /users API call response in the table",
+              "timedOut": null,
+              "duration": 191,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.fixture('users').then(users => {\n  cy.get('@rowName').should('have.length', users.length).each(($el, index) => {\n    cy.wrap($el).should('include.text', users[index].username);\n  });\n  cy.get('@rowEmail').should('have.length', users.length).each(($el, index) => {\n    cy.wrap($el).should('have.text', users[index].email);\n  });\n  cy.get('@rowAddress').should('have.length', users.length).each($el => {\n    cy.wrap($el).should('have.text', '1234 Main');\n  });\n  cy.get('@rowCheckbox').should('have.length', users.length).each(($el, index) => {\n    if (users[index].active) cy.wrap($el).should('be.checked');else cy.wrap($el).should('not.be.checked');\n  });\n  cy.get('[data-testid=\"delete-button\"]').should('have.length', users.length).each($el => {\n    cy.wrap($el).should('have.text', 'Delete ').and('have.css', 'background-color', 'rgb(220, 53, 69)').and('be.enabled');\n  });\n});",
+              "err": {},
+              "uuid": "fd5639ca-8e86-4948-a716-19355cc3d5dc",
+              "parentUUID": "048fabaf-d7e3-4495-b6eb-744046826ca1",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should show Create User button",
+              "fullTitle": "User List page should show Create User button",
+              "timedOut": null,
+              "duration": 162,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('@createUserButton').should('be.visible').and('be.enabled').and('have.text', ' Create User ').and('have.css', 'background-color', 'rgb(0, 123, 255)').click();\ncy.location('pathname').should('equal', '/user/create');",
+              "err": {},
+              "uuid": "9ca3e699-6cad-4c44-b7c1-4108cfd96d7f",
+              "parentUUID": "048fabaf-d7e3-4495-b6eb-744046826ca1",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "1a8c38e8-c90a-4f37-80b9-6e3e06478d0d",
+            "52b9da13-08a9-4563-b5e6-e4d3ae094108",
+            "e2b80539-244a-4d19-816a-ca76824fab90",
+            "75186911-9c3c-490a-b4e6-be138efb128c",
+            "29f20e5b-c4a3-424a-9b22-ce21fd940374",
+            "fd5639ca-8e86-4948-a716-19355cc3d5dc",
+            "9ca3e699-6cad-4c44-b7c1-4108cfd96d7f"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 2822,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "6.3.1"
+    },
+    "marge": {
+      "options": {
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "5.2.0"
+    }
+  }
+}
