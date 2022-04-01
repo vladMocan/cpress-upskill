@@ -1,5 +1,4 @@
 /// <reference types="cypress" />
-import users from '../fixtures/users.json'
 
 describe('User List page', () => {
     before(() => {
@@ -26,12 +25,12 @@ describe('User List page', () => {
         cy.get('[data-testid="row-checkbox"]').as('rowCheckbox')
     })
 
-    it('should show "User List" section', () => {
+    it('should show User List section', () => {
         cy.get('@userListSection').should('be.visible')
         cy.get('@userListSectionHeader').should('have.text', ' User list ')
     })
 
-    it('should show "Search By" input box', () => {
+    it('should show Search By input box', () => {
         cy.get('@searchInputBox').should('be.visible').and('be.empty')
     })
 
@@ -43,7 +42,7 @@ describe('User List page', () => {
         cy.get('@activeStatusColumn').should('have.text', 'Active')
     })
 
-    it('should correctly display a filtered table when entering valid "Search By" input', () => {
+    it('should correctly display a filtered table when entering valid Search By input', () => {
         cy.get('@searchInputBox').type('cristi')
         cy.get('@rowName')
             .should('have.length', 1)
@@ -51,45 +50,47 @@ describe('User List page', () => {
         cy.get('@searchInputBox').clear()
     })
 
-    it('should correctly display an empty table when entering invalid "Search By" input', () => {
+    it('should correctly display an empty table when entering invalid Search By input', () => {
         cy.get('@searchInputBox').type('ab#1;')
         cy.get('@rowName').should('not.exist')
         cy.get('@searchInputBox').clear()
     })
 
     it('should correctly load stubbed /users API call response in the table', () => {
-        cy.get('@rowName')
-            .should('have.length', users.length)
-            .each(($el, index) => {
-                cy.wrap($el).should('include.text', users[index].username)
-            })
-        cy.get('@rowEmail')
-            .should('have.length', users.length)
-            .each(($el, index) => {
-                cy.wrap($el).should('have.text', users[index].email)
-            })
-        cy.get('@rowAddress')
-            .should('have.length', users.length)
-            .each(($el) => {
-                cy.wrap($el).should('have.text', '1234 Main')
-            })
-        cy.get('@rowCheckbox')
-            .should('have.length', users.length)
-            .each(($el, index) => {
-                if (users[index].active) cy.wrap($el).should('be.checked')
-                else cy.wrap($el).should('not.be.checked')
-            })
-        cy.get('[data-testid="delete-button"]')
-            .should('have.length', users.length)
-            .each(($el) => {
-                cy.wrap($el)
-                    .should('have.text', 'Delete ')
-                    .and('have.css', 'background-color', 'rgb(220, 53, 69)')
-                    .and('be.enabled')
-            })
+        cy.fixture('users').then((users) => {
+            cy.get('@rowName')
+                .should('have.length', users.length)
+                .each(($el, index) => {
+                    cy.wrap($el).should('include.text', users[index].username)
+                })
+            cy.get('@rowEmail')
+                .should('have.length', users.length)
+                .each(($el, index) => {
+                    cy.wrap($el).should('have.text', users[index].email)
+                })
+            cy.get('@rowAddress')
+                .should('have.length', users.length)
+                .each(($el) => {
+                    cy.wrap($el).should('have.text', '1234 Main')
+                })
+            cy.get('@rowCheckbox')
+                .should('have.length', users.length)
+                .each(($el, index) => {
+                    if (users[index].active) cy.wrap($el).should('be.checked')
+                    else cy.wrap($el).should('not.be.checked')
+                })
+            cy.get('[data-testid="delete-button"]')
+                .should('have.length', users.length)
+                .each(($el) => {
+                    cy.wrap($el)
+                        .should('have.text', 'Delete ')
+                        .and('have.css', 'background-color', 'rgb(220, 53, 69)')
+                        .and('be.enabled')
+                })
+        })
     })
 
-    it('should show "Create User" button', () => {
+    it('should show Create User button', () => {
         cy.get('@createUserButton')
             .should('be.visible')
             .and('be.enabled')

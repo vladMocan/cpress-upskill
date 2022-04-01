@@ -14,11 +14,11 @@ describe('Landing page', () => {
         cy.location('pathname').should('equal', '/users')
     })
 
-    it('should have title "QA"', () => {
+    it('should have correct title', () => {
         cy.title().should('equal', constants.values.title)
     })
 
-    it('should show "User List" nav button', () => {
+    it('should show User List nav button', () => {
         cy.get('@userListNavButton')
             .should('have.text', ' User List ')
             .and('have.attr', 'href', '/users')
