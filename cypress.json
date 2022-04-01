@@ -1,0 +1,15 @@
+{
+    "baseUrl": "https://be-the-qa-fe.herokuapp.com",
+    "ignoreTestFiles": "**/examples/**",
+    "reporter": "mochawesome",
+    "reporterOptions": {
+        "overwrite": false,
+        "html": false,
+        "json": true
+    },
+    "screenshotOnFailure": true,
+    "screenshotsFolder": "mochawesome-report/assets",
+    "video": false,
+    "viewportHeight": 1080,
+    "viewportWidth": 1920
+}

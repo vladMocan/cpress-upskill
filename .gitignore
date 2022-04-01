@@ -9,6 +9,8 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.prettierrc
+*.prettierrc.
 
 #igone npm
 
