@@ -22,22 +22,22 @@ parameters:
     type: boolean
     default: true
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Commands ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-# commands:
-#   report-tests:
-#     description: |
-#       Notify the status of the build
-#     steps:
-#       - run:
-#            name: notify slack
-#            when: always
-#       - store_artifacts:
-#                 path: mochawesome-report
-#       - slack/notify:
-#                  event: fail
-#                  template: basic_fail_1
-#       - slack/notify:
-#                   event: pass
-#                   template: basic_success_1 
+commands:
+  report-tests:
+    description: |
+      Notify the status of the build
+    steps:
+      - run:
+           name: notify slack
+           when: always
+      - store_artifacts:
+                path: mochawesome-report
+      - slack/notify:
+                 event: fail
+                 template: basic_fail_1
+      - slack/notify:
+                  event: pass
+                  template: basic_success_1 
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Workflows ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
@@ -62,8 +62,8 @@ all-tests-workflow: &all-tests-workflow
         group: API
         requires:
           - Setup Linux
-      #  post-steps:
-      #    - report-tests
+       post-steps:
+         - report-tests
 
     - cypress/run:
         name: "Run test on firefox"
@@ -74,8 +74,8 @@ all-tests-workflow: &all-tests-workflow
         group: API
         requires:
           - Setup Linux
-      #  post-steps:
-      #    - report-tests
+       post-steps:
+         - report-tests
 
 
 chrome-workflow: &chrome-workflow
@@ -99,8 +99,8 @@ chrome-workflow: &chrome-workflow
         group: API
         requires:
           - Setup Linux
-        #post-steps:
-        #  - report-tests     
+        post-steps:
+         - report-tests     
         
         
 firefox-workflow: &firefox--workflow
@@ -124,8 +124,8 @@ firefox-workflow: &firefox--workflow
         group: API
         requires:
           - Setup Linux
-        #post-steps:
-        #  - report-tests     
+        post-steps:
+         - report-tests     
         
 
 workflows:
