@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@1.21.0
+  cypress: cypress-io/cypress@2.2.0
   win: circleci/windows@2.4.1
   slack: circleci/slack@4.4.2
 
