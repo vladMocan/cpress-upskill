@@ -52,7 +52,7 @@ all-tests-workflow: &all-tests-workflow
  # Run all tests 
     - cypress/run:
         name: "Run test on chrome"
-        command: npm run cy:run-and-report-chrome
+        command: npm run cy:run-chrome
         no-workspace: true
           # always store any test screenshots and videos
         store_artifacts: true
@@ -64,7 +64,7 @@ all-tests-workflow: &all-tests-workflow
 
     - cypress/run:
         name: "Run test on firefox"
-        command: npm run cy:run-and-report-firefox
+        command: npm run cy:run-firefox
         no-workspace: true
           # always store any test screenshots and videos
         store_artifacts: true
@@ -74,6 +74,17 @@ all-tests-workflow: &all-tests-workflow
         post-steps:
          - report-tests
 
+    - cypress/run:
+        name: "Run API tests"
+        command: npm run cy:run-api
+        no-workspace: true
+          # always store any test screenshots and videos
+        store_artifacts: true
+        group: API
+        requires:
+          - Setup Linux
+        post-steps:
+         - report-tests 
 
 chrome-workflow: &chrome-workflow
  jobs:

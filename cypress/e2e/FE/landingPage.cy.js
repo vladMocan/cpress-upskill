@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-import * as constants from '../helpers/constants.js'
+import * as constants from '../../helpers/constants.js'
 
 describe('Landing page', () => {
     before(() => {

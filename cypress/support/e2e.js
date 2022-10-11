@@ -16,8 +16,9 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 import addContext from 'mochawesome/addContext'
-// Alternatively you can use CommonJS syntax:
-// require('./commands')
+import chaiExclude from 'chai-exclude';
+import chaiJsonSchema from 'chai-json-schema';
+
 
 Cypress.on('test:after:run', (test, runnable) => {
     if (test.state === 'failed') {
@@ -25,3 +26,6 @@ Cypress.on('test:after:run', (test, runnable) => {
         addContext({ test }, screenshot)
     }
 })
+
+chai.use(chaiExclude);
+chai.use(chaiJsonSchema);
