@@ -4,6 +4,7 @@
     "description": "A demo project for end to end test using cypress",
     "main": "index.js",
     "scripts": {
+        "cy:run-safari": "cypress run --browser webkit --spec cypress/e2e/FE",
         "cy:run-firefox": "cypress run --browser firefox --spec cypress/e2e/FE",
         "cy:run-chrome": "cypress run --browser chrome --spec cypress/e2e/FE",
         "cy:run-api": "cypress run --spec cypress/e2e/API ",
@@ -11,18 +12,18 @@
         "cy:run-and-report-firefox": "node scripts/runAndGenerateReport.js",
         "cy:run-and-report-chrome": "node scripts/runAndGenerateReport.js",
         "cy:run-and-report-api": "node scripts/runAndGenerateReport.js"
-    
     },
     "author": "Vlad Mocan",
     "license": "ISC",
     "devDependencies": {
+        "chai-exclude": "^2.0.2",
+        "chai-json-schema": "^1.5.1",
         "cypress": "^10.9",
         "mocha": "^9.1.2",
         "mochawesome": "^7.1.3",
         "mochawesome-merge": "^4.2.0",
         "mochawesome-report-generator": "^6.2.0",
-        "chai-exclude": "^2.0.2",
-        "chai-json-schema": "^1.5.1"
+        "playwright-webkit": "^1.27.1"
     },
     "dependencies": {
         "fs-extra": "^10.0.0"

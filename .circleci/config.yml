@@ -77,6 +77,20 @@ all-tests-workflow: &all-tests-workflow
           - Setup Linux
         post-steps:
          - report-tests
+      
+    - cypress/run:
+        name: "Run test on safari"
+        executor: with-chrome-and-firefox
+        browser: webkit
+        command: npm run cy:run-webkit
+        no-workspace: true
+          # always store any test screenshots and videos
+        store_artifacts: true
+        group: Firefox
+        requires:
+          - Setup Linux
+        post-steps:
+         - report-tests      
 
     - cypress/run:
         name: "Run API tests"

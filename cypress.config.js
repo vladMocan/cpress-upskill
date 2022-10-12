@@ -19,6 +19,7 @@ module.exports = defineConfig({
       return require('./cypress/plugins/index.js')(on, config)
     },
     baseUrl: 'https://be-the-qa-fe.herokuapp.com',
-    baseApiUrl: 'https://be-the-qa-api.herokuapp.com/'
+    baseApiUrl: 'https://be-the-qa-api.herokuapp.com/',
+    experimentalWebKitSupport: true
   },
 })
