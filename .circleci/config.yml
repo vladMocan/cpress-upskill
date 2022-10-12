@@ -7,7 +7,7 @@ orbs:
 executors:
   with-chrome-and-firefox:
     docker:
-      - image: "cypress/browsers:node16.5.0-chrome97-ff96"
+      - image: "justanoterone/webkit-cypress-base:0.0.1"  
     resource_class: medium+
     
 # Set parameter here
@@ -46,8 +46,8 @@ all-tests-workflow: &all-tests-workflow
         executor: with-chrome-and-firefox
         post-steps:
           - run:
-              name: Install webkit ℹ️
-              command: npx playwright install-deps webkit
+              name: Install webkit
+              command: npx playwright install-deps webkit 
           - run:
               name: Print machine info ℹ️
               command: yarn cypress info    
