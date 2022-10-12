@@ -82,7 +82,7 @@ all-tests-workflow: &all-tests-workflow
         name: "Run test on safari"
         executor: with-chrome-and-firefox
         browser: webkit
-        command: npm run cy:run-webkit
+        command: npm run cy:run-safari
         no-workspace: true
           # always store any test screenshots and videos
         store_artifacts: true
