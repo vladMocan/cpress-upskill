@@ -111,7 +111,6 @@ chrome-workflow: &chrome-workflow
           # always store any test screenshots and videos
         store_artifacts: true
         group: Chrome
-        browser: chrome
         requires:
           - Setup Linux
         post-steps:
