@@ -56,6 +56,7 @@ all-tests-workflow: &all-tests-workflow
         no-workspace: true
           # always store any test screenshots and videos
         store_artifacts: true
+        browser: Caddhrome
         group: API
         requires:
           - Setup Linux
@@ -68,7 +69,8 @@ all-tests-workflow: &all-tests-workflow
         no-workspace: true
           # always store any test screenshots and videos
         store_artifacts: true
-        group: API
+        group: Firefox
+        browser: firefox
         requires:
           - Setup Linux
         post-steps:
@@ -104,7 +106,8 @@ chrome-workflow: &chrome-workflow
         no-workspace: true
           # always store any test screenshots and videos
         store_artifacts: true
-        group: API
+        group: Chrome
+        browser: chrome
         requires:
           - Setup Linux
         post-steps:
@@ -129,7 +132,8 @@ firefox-workflow: &firefox--workflow
         no-workspace: true
           # always store any test screenshots and videos
         store_artifacts: true
-        group: API
+        browser: Firefox
+        group: Firefox
         requires:
           - Setup Linux
         post-steps:
