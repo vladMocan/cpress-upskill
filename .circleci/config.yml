@@ -52,11 +52,12 @@ all-tests-workflow: &all-tests-workflow
  # Run all tests 
     - cypress/run:
         name: "Run test on chrome"
+        executor: with-chrome-and-firefox
+        browser: chrome
         command: npm run cy:run-chrome
         no-workspace: true
           # always store any test screenshots and videos
         store_artifacts: true
-        browser: Caddhrome
         group: API
         requires:
           - Setup Linux
@@ -65,12 +66,13 @@ all-tests-workflow: &all-tests-workflow
 
     - cypress/run:
         name: "Run test on firefox"
+        executor: with-chrome-and-firefox
+        browser: firefox
         command: npm run cy:run-firefox
         no-workspace: true
           # always store any test screenshots and videos
         store_artifacts: true
         group: Firefox
-        browser: firefox
         requires:
           - Setup Linux
         post-steps:
@@ -103,6 +105,8 @@ chrome-workflow: &chrome-workflow
     - cypress/run:
         name: "Run chrome tests"
         command: npm run cy:run-and-report-chrome
+        executor: with-chrome-and-firefox
+        browser: chrome
         no-workspace: true
           # always store any test screenshots and videos
         store_artifacts: true
