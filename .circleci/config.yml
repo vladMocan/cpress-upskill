@@ -7,7 +7,7 @@ orbs:
 executors:
   with-chrome-and-firefox:
     docker:
-      - image: "justanoterone/webkit-cypress-base:0.0.1"  
+      - image: "justanoterone/webkit-cypress-browser:0.0.1"  
     resource_class: medium+
     
 # Set parameter here
