@@ -46,8 +46,11 @@ all-tests-workflow: &all-tests-workflow
         executor: with-chrome-and-firefox
         post-steps:
           - run:
+              name: Install webkit ℹ️
+              command: npx playwright install-deps webkit
+          - run:
               name: Print machine info ℹ️
-              command: yarn cypress info
+              command: yarn cypress info    
 
  # Run all tests 
     - cypress/run:
