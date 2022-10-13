@@ -9,6 +9,12 @@ executors:
     docker:
       - image: "justanoterone/webkit-cypress-browser:0.0.1"  
     resource_class: medium+
+
+  pw-focal-development:
+     docker:
+       - image: "mcr.microsoft.com/playwright:v1.27.0-focal"
+   environment:
+     NODE_ENV: development   
     
 # Set parameter here
 parameters:
@@ -46,9 +52,6 @@ all-tests-workflow: &all-tests-workflow
         executor: with-chrome-and-firefox
         post-steps:
           - run:
-              name: Install webkit
-              command: npx playwright install-deps webkit 
-          - run:
               name: Print machine info ℹ️
               command: yarn cypress info    
 
@@ -83,10 +86,11 @@ all-tests-workflow: &all-tests-workflow
       
     - cypress/run:
         name: "Run test on safari"
-        executor: with-chrome-and-firefox
+        executor: mcr.microsoft.com/playwright:v1.27.0-focal
         browser: webkit
         command: |
                npx playwright install-deps webkit
+               npm install cypress
                npm run cy:run-safari
 
         no-workspace: true
