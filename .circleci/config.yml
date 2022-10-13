@@ -83,6 +83,7 @@ all-tests-workflow: &all-tests-workflow
         executor: with-chrome-and-firefox
         browser: webkit
         command: |
+               npm install playwright-webkit
                npx playwright install-deps webkit
                npm run cy:run-safari
 
