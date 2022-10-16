@@ -9,7 +9,14 @@ executors:
     docker:
       - image: justanoterone/webkit-cypress-browser:0.0.3
     resource_class: medium+  
-    
+
+  pw-focal-development:
+     docker: 
+       - image: mcr.microsoft.com/playwright:v1.27.0-focal
+     environment:
+        NODE_ENV: development
+ 
+
 # Set parameter here
 parameters:
   chrome_tests:
@@ -79,24 +86,6 @@ all-tests-workflow: &all-tests-workflow
          - report-tests
       
     - cypress/run:
-        name: "Run test on safari"
-        executor: with-chrome-and-firefox
-        browser: webkit
-        command: |
-               npm install playwright-webkit
-               npx playwright install-deps webkit
-               npm run cy:run-safari
-
-        no-workspace: true
-          # always store any test screenshots and videos
-        store_artifacts: true
-        group: Firefox
-        requires:
-          - Setup Linux
-        post-steps:
-         - report-tests      
-
-    - cypress/run:
         name: "Run API tests"
         command: npm run cy:run-api
         no-workspace: true
@@ -113,7 +102,7 @@ chrome-workflow: &chrome-workflow
    # Setup
     - cypress/install:
         name: "Setup Linux"
-        executor: with-chrome-and-firefox
+        executor: pw-focal-development
         post-steps:
           - run:
               name: Print machine info ℹ️
@@ -122,9 +111,9 @@ chrome-workflow: &chrome-workflow
  # Run chrome tests 
     - cypress/run:
         name: "Run chrome tests"
-        command: npm run cy:run-and-report-chrome
-        executor: with-chrome-and-firefox
-        browser: chrome
+        command: npm run cy:run-safari
+        executor: pw-focal-development
+        browser: webkit
         no-workspace: true
           # always store any test screenshots and videos
         store_artifacts: true
@@ -158,14 +147,35 @@ firefox-workflow: &firefox--workflow
         requires:
           - Setup Linux
         post-steps:
-         - report-tests     
-        
+         - report-tests
+
+safari-workflow: &safari--workflow
+ jobs:
+  run-test:
+    docker:
+      - image: mcr.microsoft.com/playwright:v1.23.1-focal
+    # Steps to the job
+    steps:
+      - checkout
+      - run: npm i -D @playwright/test
+      - run: npx playwright install
+      - run: npx playwright install chrome
+      - run:
+          name: Run test
+          command: PLAYWRIGHT_JUNIT_OUTPUT_NAME=results.xml npx playwright test --reporter=junit --project=chromium
+      - store_test_results:
+          path: results.xml
+       
 
 workflows:
   linux_parallel_test:
     when: << pipeline.parameters.parallel_tests>>
     <<: *all-tests-workflow
-   
+
+  chrome_tests:
+    when: << pipeline.parameters.chrome_tests>>
+    <<: *chrome-workflow
+    
   # scheduled tasks
   parallel_scheduled:
     triggers:
