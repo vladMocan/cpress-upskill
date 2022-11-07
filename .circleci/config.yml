@@ -35,18 +35,8 @@ commands:
     description: |
       Notify the status of the build & generate allure report 
     steps:
-      - run:
-           name: generate combined report
-           when: always
-           command: |
-                   allure generate \
-                   --config << parameters.configuration-path >> \
-                   --report-dir << parameters.target-path >> \
-                   << parameters.results-path >>
-
       - store_artifacts:
-                path: << parameters.target-path >>
-                destination: << parameters.artifact-path >>
+                path: /allure-report
       - slack/notify:
                  event: fail
                  template: basic_fail_1
