@@ -18,6 +18,8 @@ import './commands'
 import addContext from 'mochawesome/addContext'
 import chaiExclude from 'chai-exclude';
 import chaiJsonSchema from 'chai-json-schema';
+import '@shelex/cypress-allure-plugin';
+
 
 
 Cypress.on('test:after:run', (test, runnable) => {

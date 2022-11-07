@@ -31,10 +31,15 @@ parameters:
 commands:
   report-tests:
     description: |
-      Notify the status of the build
+      Notify the status of the build & generate allure report 
     steps:
+     - run:
+           name: generate combined report
+           when: always
+           command: |
+                  npx report:allure
       - store_artifacts:
-                path: mochawesome-report
+                path: mochawesome-report          
       - slack/notify:
                  event: fail
                  template: basic_fail_1
@@ -165,7 +170,8 @@ firefox-workflow: &firefox--workflow
           - Setup Linux
         post-steps:
          - report-tests     
-        
+
+
 
 workflows:
   linux_parallel_test:
@@ -182,3 +188,4 @@ workflows:
               only:
                 - main
     <<:  *all-tests-workflow
+
