@@ -39,7 +39,7 @@ commands:
            when: always
            command: npx run report:allure
       - store_artifacts:
-                path: mochawesome-report          
+                path: mochawesome-report,allure-report          
       - slack/notify:
                  event: fail
                  template: basic_fail_1
