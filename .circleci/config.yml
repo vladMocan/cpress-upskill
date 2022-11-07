@@ -37,8 +37,7 @@ commands:
      - run:
            name: generate combined report
            when: always
-           command: |
-                  npx report:allure
+           command: npx run report:allure
       - store_artifacts:
                 path: mochawesome-report          
       - slack/notify:
