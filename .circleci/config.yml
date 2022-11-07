@@ -3,6 +3,7 @@ orbs:
   cypress: cypress-io/cypress@2.2.0
   win: circleci/windows@2.4.1
   slack: circleci/slack@4.4.2
+  allure: ayte/allure@0.1.3
 
 executors:
   with-chrome-and-firefox:
@@ -38,12 +39,14 @@ commands:
            name: generate combined report
            when: always
            command: |
-               npm install -g allure-commandline
-               
-               npm run "report:allure"
+                   allure generate \
+                   --config << parameters.configuration-path >> \
+                   --report-dir << parameters.target-path >> \
+                   << parameters.results-path >>
 
       - store_artifacts:
-                path: mochawesome-report  
+                path: << parameters.target-path >>
+                destination: << parameters.artifact-path >>
       - slack/notify:
                  event: fail
                  template: basic_fail_1
