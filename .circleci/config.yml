@@ -38,7 +38,7 @@ commands:
            name: generate combined report
            when: always
            command: |
-               sudo npm install -g allure-commandline
+               npm install -g allure-commandline
                
                npm run "report:allure"
 
