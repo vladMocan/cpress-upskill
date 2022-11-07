@@ -7,18 +7,19 @@ orbs:
 executors:
   with-chrome-and-firefox:
     docker:
-      - image: "justanoterone/webkit-cypress-browser:0.0.1"  
-    resource_class: medium+
+      - image: justanoterone/webkit-cypress-browser:0.0.3
+    resource_class: medium+  
 
   pw-focal-development:
-     docker:
-       - image: "mcr.microsoft.com/playwright:v1.27.0-focal"
-   environment:
-     NODE_ENV: development   
-    
+     docker: 
+       - image: mcr.microsoft.com/playwright:v1.27.0-focal
+     environment:
+        NODE_ENV: development
+ 
+
 # Set parameter here
 parameters:
-  chrome_tests:
+  safari_tests:
     type: boolean
     default: false
   fireFox_tests:
@@ -90,24 +91,6 @@ all-tests-workflow: &all-tests-workflow
          - report-tests
       
     - cypress/run:
-        name: "Run test on safari"
-        executor: mcr.microsoft.com/playwright:v1.27.0-focal
-        browser: webkit
-        command: |
-               npx playwright install-deps webkit
-               npm install cypress
-               npm run cy:run-safari
-
-        no-workspace: true
-          # always store any test screenshots and videos
-        store_artifacts: true
-        group: Firefox
-        requires:
-          - Setup Linux
-        post-steps:
-         - report-tests      
-
-    - cypress/run:
         name: "Run API tests"
         command: npm run cy:run-api
         no-workspace: true
@@ -119,53 +102,27 @@ all-tests-workflow: &all-tests-workflow
         post-steps:
          - report-tests 
 
-chrome-workflow: &chrome-workflow
+webkit-workflow: &webkit-workflow
  jobs:
    # Setup
     - cypress/install:
         name: "Setup Linux"
-        executor: with-chrome-and-firefox
+        executor: pw-focal-development
         post-steps:
           - run:
               name: Print machine info ℹ️
               command: yarn cypress info
 
- # Run chrome tests 
+ # Run safari tests 
     - cypress/run:
-        name: "Run chrome tests"
-        command: npm run cy:run-and-report-chrome
-        executor: with-chrome-and-firefox
-        browser: chrome
+        name: "Run safari tests"
+        command: npm run cy:run-safari
+        executor: pw-focal-development
+        browser: webkit
         no-workspace: true
           # always store any test screenshots and videos
         store_artifacts: true
-        group: Chrome
-        requires:
-          - Setup Linux
-        post-steps:
-         - report-tests     
-        
-        
-firefox-workflow: &firefox--workflow
- jobs:
-   # Setup
-    - cypress/install:
-        name: "Setup Linux"
-        executor: with-chrome-and-firefox
-        post-steps:
-          - run:
-              name: Print machine info ℹ️
-              command: yarn cypress info
-
- # Run firefox tests 
-    - cypress/run:
-        name: "Run firefox tests"
-        command: 
-        no-workspace: true
-          # always store any test screenshots and videos
-        store_artifacts: true
-        browser: Firefox
-        group: Firefox
+        group: Webkit
         requires:
           - Setup Linux
         post-steps:
@@ -177,7 +134,11 @@ workflows:
   linux_parallel_test:
     when: << pipeline.parameters.parallel_tests>>
     <<: *all-tests-workflow
-   
+
+  safari_tests:
+    when: << pipeline.parameters.safari_tests>>
+    <<: *webkit-workflow
+    
   # scheduled tasks
   parallel_scheduled:
     triggers:
@@ -188,4 +149,14 @@ workflows:
               only:
                 - main
     <<:  *all-tests-workflow
+
+  safari_scheduled:
+    triggers:
+      - schedule:
+          cron: "15 4 * * 1-5"
+          filters:
+            branches:
+              only:
+                - main
+    <<:  *webkit-workflow
 
