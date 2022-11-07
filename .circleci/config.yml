@@ -40,7 +40,7 @@ commands:
            command: |
                sudo npm install -g allure-commandline
                
-               npm run report:allure
+               npm run "report:allure"
 
       - store_artifacts:
                 path: mochawesome-report  
