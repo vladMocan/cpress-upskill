@@ -37,7 +37,7 @@ commands:
       - run:
            name: generate combined report
            when: always
-           command: npx run report:allure
+           command: npm run report:allure
       - store_artifacts:
                 path: allure-report          
       - slack/notify:
