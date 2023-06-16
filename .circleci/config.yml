@@ -3,6 +3,7 @@ orbs:
   cypress: cypress-io/cypress@2.2.0
   win: circleci/windows@2.4.1
   slack: circleci/slack@4.4.2
+  allure: ayte/allure@0.1.3
 
 executors:
   with-chrome-and-firefox:
@@ -32,10 +33,10 @@ parameters:
 commands:
   report-tests:
     description: |
-      Notify the status of the build
+      Notify the status of the build & generate allure report 
     steps:
       - store_artifacts:
-                path: mochawesome-report
+                path: /allure-report
       - slack/notify:
                  event: fail
                  template: basic_fail_1
@@ -121,8 +122,10 @@ webkit-workflow: &webkit-workflow
         requires:
           - Setup Linux
         post-steps:
-         - report-tests           
-             
+         - report-tests     
+
+
+
 workflows:
   linux_parallel_test:
     when: << pipeline.parameters.parallel_tests>>
